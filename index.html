@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JSON Patch Builder Online</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">JSON Patch Builder Online</h1>
+            <h2 class="subtitle">Generate the JSON Patch (<a href="http://tools.ietf.org/html/rfc6902">RFC6902</a>) document to mutate a resource.
+                <br/> You can use this tool to calculate the JSON Patch needed to mutate a resource to a given state.</h2>
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Source</label>
+                        <div class="control">
+                            <textarea class="textarea" id="source">
+{
+    "Message":"Hello World!"
+}</textarea>
+                            <p class="help">Insert here how you want the JSON to be after the PATCH applied.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Target</label>
+                        <div class="control">
+                            <textarea class="textarea" id="target">
+{
+    "Message":""
+}</textarea>
+                            <p class="help">Insert here the current representation where you want to apply the Patch.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <a class="button is-primary is-fullwidth" id="build">Click to Build the Patch Document</a>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Json Patch Document</label>
+                        <div class="control">
+                            <textarea class="textarea" id="result" placeholder="Click the button to see the JSON Patch Result..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Thanks</strong> to
+                    <a href="https://bulma.io">BULMA</a> and
+                    <a href="https://github.com/Starcounter-Jack/JSON-Patch">JSON-Patch</a> used to build this tool.
+                </p>
+
+                <p>
+                    The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">under MIT</a> and you can find it at
+                    <a href="">GitHub</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fast-json-patch/2.0.6/fast-json-patch.min.js"></script>
+    <script>
+
+        var buildButton = document.getElementById('build');
+
+        buildButton.onclick = function () {
+            var targetDocument = getTextAsJson('target');
+            var sourceDocument = getTextAsJson('source');
+            var diff = jsonpatch.compare(targetDocument, sourceDocument);
+            document.getElementById('result').value = JSON.stringify(diff);
+        };
+
+        function getTextAsJson(elementId) {
+            return JSON.parse(document.getElementById(elementId).value);
+        }
+
+    </script>
+</body>
+
+</html>
