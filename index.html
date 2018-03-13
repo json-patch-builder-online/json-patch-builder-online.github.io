@@ -86,7 +86,7 @@
             var targetDocument = getTextAsJson('target');
             var sourceDocument = getTextAsJson('source');
             var diff = jsonpatch.compare(targetDocument, sourceDocument);
-            document.getElementById('result').value = JSON.stringify(diff);
+            document.getElementById('result').value = JSON.stringify(diff, null, 4);
         };
 
         function getTextAsJson(elementId) {
