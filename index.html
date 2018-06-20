@@ -23,11 +23,11 @@
             <div class="columns">
                 <div class="column">
                     <div class="field">
-                        <label class="label">Source</label>
+                        <label class="label">Source (current state)</label>
                         <div class="control">
                             <textarea class="textarea" id="source">
 {
-    "Message":"Hello World!"
+    "Message":""
 }</textarea>
                             <p class="help">Insert here how the Resource should be after apply the JSON Patch.</p>
                         </div>
@@ -35,11 +35,11 @@
                 </div>
                 <div class="column">
                     <div class="field">
-                        <label class="label">Target</label>
+                        <label class="label">Target (desired state)</label>
                         <div class="control">
                             <textarea class="textarea" id="target">
 {
-    "Message":""
+    "Message":"Hello World!"
 }</textarea>
                             <p class="help">Insert here the current representation where you want to apply the Patch.</p>
                         </div>
@@ -91,7 +91,7 @@
         buildButton.onclick = function () {
             var targetDocument = getTextAsJson('target');
             var sourceDocument = getTextAsJson('source');
-            var diff = jsonpatch.compare(targetDocument, sourceDocument);
+            var diff = jsonpatch.compare(sourceDocument, targetDocument);
             document.getElementById('result').value = JSON.stringify(diff, null, 4);
         };
 
