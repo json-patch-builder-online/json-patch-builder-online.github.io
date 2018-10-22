@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
     <style type="">
-    .textarea
+        .textarea
     {
         min-height: 250px !important;
     }
@@ -18,8 +18,11 @@
 <body>
     <section class="section">
         <div class="container">
+
             <h1 class="title">JSON Patch Builder Online</h1>
-            <h2 class="subtitle">You can use this tool to calculate the JSON Patch (<a href="http://tools.ietf.org/html/rfc6902">RFC6902</a>) needed to mutate a resource to a given state.</h2>
+            <h2 class="subtitle">You can use this tool to calculate the JSON Patch (<a href="http://tools.ietf.org/html/rfc6902">RFC6902</a>)
+                needed to mutate a resource to a given state.</h2>
+
             <div class="columns">
                 <div class="column">
                     <div class="field">
@@ -46,11 +49,19 @@
                     </div>
                 </div>
             </div>
+
             <div class="columns">
                 <div class="column">
                     <a class="button is-primary is-fullwidth" id="build">Click to Build the Patch Document</a>
                 </div>
             </div>
+            <article class="message is-warning" id="alert-panel" style="display:none;">
+                <div class="message-header">
+                    <p>Warning</p>
+                </div>
+                <div class="message-body" id="alert-panel-body">
+                </div>
+            </article>
             <div class="columns">
                 <div class="column">
                     <div class="field">
@@ -89,14 +100,21 @@
         var buildButton = document.getElementById('build');
 
         buildButton.onclick = function () {
-            var targetDocument = getTextAsJson('target');
-            var sourceDocument = getTextAsJson('source');
+            document.getElementById('alert-panel').style.display = 'none';
+
+            var targetDocument = getTextAsJson('target', 'Target');
+            var sourceDocument = getTextAsJson('source', 'Source');
             var diff = jsonpatch.compare(sourceDocument, targetDocument);
             document.getElementById('result').value = JSON.stringify(diff, null, 4);
         };
 
-        function getTextAsJson(elementId) {
-            return JSON.parse(document.getElementById(elementId).value);
+        function getTextAsJson(elementId, elementLabel) {
+            try {
+                return JSON.parse(document.getElementById(elementId).value);
+            } catch (e) {
+                document.getElementById('alert-panel-body').innerHTML = 'Error parsing <strong>' + elementLabel + '</strong> JSON.';
+                document.getElementById('alert-panel').style.display = 'block';
+            }
         }
 
     </script>
