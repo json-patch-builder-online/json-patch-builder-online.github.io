@@ -28,7 +28,7 @@
                     <div class="field">
                         <label class="label">Source (current state)</label>
                         <div class="control">
-                            <textarea class="textarea" id="source">
+                            <textarea class="textarea" id="source" onclick="this.select();">
 {
     "Message":""
 }</textarea>
@@ -40,7 +40,7 @@
                     <div class="field">
                         <label class="label">Target (desired state)</label>
                         <div class="control">
-                            <textarea class="textarea" id="target">
+                            <textarea class="textarea" id="target" onclick="this.select();">
 {
     "Message":"Hello World!"
 }</textarea>
@@ -67,7 +67,7 @@
                     <div class="field">
                         <label class="label">Json Patch Document</label>
                         <div class="control">
-                            <textarea class="textarea" id="result" placeholder="Click the button to see the JSON Patch Result..."></textarea>
+                            <textarea class="textarea" id="result" placeholder="Click the button to see the JSON Patch Result..." onclick="this.select();"></textarea>
                         </div>
                     </div>
                 </div>
